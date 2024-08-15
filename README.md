@@ -48,30 +48,30 @@ re.search(pattern,string)
 		
 Snippet -
 
-		import  re
-		 names = ['First name', 
-							   ‘First middle last’, 
-							   ‘Singlename’]
+import  re
+names = ['First name', 
+	‘First middle last’, 
+	‘Singlename’]
 
-		regex = ‘C\w*’
-		for name in names: #suppost names contains a list of names of different types.
-				match = re.search(regex, name)
-				if match:
-						print(name) #it will print the name. if there's a match then it will display the details.
-						print(match.start()) -- Start and the End value are the indicies which will show you where the match occured.
-						print(match.end()
-						print(match.span()) -- To call both the indicies in a single call with span method
-						print(match.group()) -- To display the substring that matched the REGEX - call the group() method.
-						
-			to print each matching group of characters by index - 
-			
-			we will use ( and ) symbol to group the REGEX. for ex: ‘^(\w+)\s+(\w+)$’
-						print(name)
-						print(match.group(1))
-						print(match.group(2))      #It will print the full name first, then will print the firstname and the lastname separately.
-						
-						#TO give name for this REGEX's each group ‘^(\w+)\s+(\w+)$’ - We can use ?p<groupname> ------- ‘^(?P<group1>\w+)\s+(?P<group2>\w+)$’
-						#To print each group by name --
+regex = ‘C\w*’
+for name in names: #suppost names contains a list of names of different types.
+match = re.search(regex, name)
+if match:
+print(name) #it will print the name. if there's a match then it will display the details.
+print(match.start()) -- Start and the End value are the indicies which will show you where the match occured.
+print(match.end()
+print(match.span()) -- To call both the indicies in a single call with span method
+print(match.group()) -- To display the substring that matched the REGEX - call the group() method.
+
+to print each matching group of characters by index - 
+
+we will use ( and ) symbol to group the REGEX. for ex: ‘^(\w+)\s+(\w+)$’
+print(name)
+print(match.group(1))
+print(match.group(2))      #It will print the full name first, then will print the firstname and the lastname separately.
+
+#TO give name for this REGEX's each group ‘^(\w+)\s+(\w+)$’ - We can use ?p<groupname> ------- ‘^(?P<group1>\w+)\s+(?P<group2>\w+)$’
+#To print each group by name --
 						
 
 
@@ -86,53 +86,66 @@ Other Search funtions in RE module in python.
 →  Often time a REGEX will match a several parts of a string. → The search function just returns the first match. To find them all we will use findall function.
 
 ex:
-		re.findall(pattern, string, flags=0)
-		--> Retrun all non-overlapping matches of pattern in string, as a list of strings or tuples.
+re.findall(pattern, string, flags=0)
+--> Retrun all non-overlapping matches of pattern in string, as a list of strings or tuples.
+
+# Scan for blocks of lower case letters
+regex = ‘[a-z]+’
+for name in names:
+matches = re.findall(regex, name)
+if matches:
+		print(matches) → This function will return a list of strings, not match objects.
 		
-		# Scan for blocks of lower case letters
-		regex = ‘[a-z]+’
-		for name in names:
-			matches = re.findall(regex, name)
-			if matches:
-					print(matches) → This function will return a list of strings, not match objects.
+If you would prefer to have access to each match object, call the “find iter” function and loop over the iterator.
+ex:
+re.finditer(pattern, string, flags=0)
+
+match function = this will test a REGEX to test a string for a match from the beginning. 
+Ex:
+
+
+imrpot re
+
+values = ['https://www.google.com',
+					 ‘http://www.google.org’,
+					 ‘file://file.path.here',
+					‘com.android.com.www_https://’]
 					
-			If you would prefer to have access to each match object, call the “find iter” function and loop over the iterator.
-			ex:
-			re.finditer(pattern, string, flags=0)
-			
-			match function = this will test a REGEX to test a string for a match from the beginning. 
-			Ex:
-			
-			
-			imrpot re
-			
-			values = ['https://www.google.com',
-								 ‘http://www.google.org’,
-								 ‘file://file.path.here',
-								‘com.android.com.www_https://’]
-								
-			# TO test which one begins with http and https.
-			
-			regex = ‘http?' #this will search for the values starting with http.
-			for value in values:
-				if re.match(regex, value):
-					print(value)			
-			
-			
-			O/p - 'https://www.google.com',
-								 ‘http://www.google.in’.
-								
-								
-				FULL MATCH FUNCTION -
-				
-				re.fullmatch(pattern, string, flags=0)       #The fullmatch function is used to not just scan a string for a match, but check to see if the entire string fits the regex.
-				
-				ex:
-				
-				regex = ‘https?://w{3}.\w+.(org|com)’
-				for value in values:
-						if re.fullmatch(regex, value):
-								print(value)
-								
-						O/p - https://www.google.com',
-								 ‘http://www.google.org’,.
+# TO test which one begins with http and https.
+
+regex = ‘http?' #this will search for the values starting with http.
+for value in values:
+	if re.match(regex, value):
+		print(value)			
+
+
+O/p - 'https://www.google.com',
+					 ‘http://www.google.in’.
+					
+					
+	FULL MATCH FUNCTION -
+	
+	re.fullmatch(pattern, string, flags=0)       #The fullmatch function is used to not just scan a string for a match, but check to see if the entire string fits the regex.
+	
+	ex:
+	
+	regex = ‘https?://w{3}.\w+.(org|com)’
+	for value in values:
+			if re.fullmatch(regex, value):
+					print(value)
+					
+			O/p - https://www.google.com',
+					 ‘http://www.google.org’,.
+
+# RegEx Functions
+
+The re module offers a set of functions that allows  us to search a string for a match:
+
+| Function | Description                                                       |
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+| findall  | Returns a list containing all matches                             |
+| search   | Returns a Match object if there is a match anywhere in the string |
+| split    | Returns a list where the string has been split at each match      |
+| sub      | Replaces one or many matches with a string                        |
+
+
